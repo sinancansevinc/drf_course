@@ -25,12 +25,13 @@ class Item(TimeStampedModel,ActivatorModel,TitleSlugDescriptionModel,Model):
     def manage_stock(self,qty):
         new_stock = self.stock - int(qty)
         self.stock = new_stock
-        
         self.save()
+        
     def check_stock(self,qty):
         if int(qty) > self.stock:
             return False
         return True   
+    
     def place_order(self,user,qty):
         if self.check_stock(qty):
             order = Order.objects.create(item = self,quantity = qty,user = user)
